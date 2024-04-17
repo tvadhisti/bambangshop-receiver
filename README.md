@@ -85,5 +85,7 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+1. In the tutorial, we used RwLock instead of Mutex to manage a list of notifications accessed by multiple threads. RwLock allows many threads to read the list at the same time, which is great because it doesn't slow things down when lots of threads just want to look at the notifications without changing anything. However, when a thread needs to add a new notification, RwLock makes sure that this thread has exclusive access to the list during the update. Using Mutex would mean only one thread can access the list at a time, whether they’re just reading or adding a notification, which could really slow things down if lots of threads are trying to read the list.
+2. In Rust, we can't directly change static variables to ensure safety when multiple parts of a program run at the same time. This is different from Java, where we can freely modify static variables. Rust uses the lazy_static crate to safely handle static variables that need to be changed. When these variables must be mutable, Rust combines lazy_static with safe tools like Mutex or RwLock. This setup allows only one part of the program to change the variable at a time
 
 #### Reflection Subscriber-2
